@@ -39,8 +39,8 @@ DaVinci Minds is an AI-powered interactive learning platform designed specifical
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/davinci-minds.git
-   cd davinci-minds
+   git clone https://github.com/yourusername/DavinciMinds-A-Complete-Learning-Platform-.git
+   cd DavinciMinds-A-Complete-Learning-Platform-
 
 Set up the environment
 '''bash
