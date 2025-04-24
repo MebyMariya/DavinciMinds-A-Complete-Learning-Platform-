@@ -51,10 +51,18 @@ Access the platform at http://localhost:5000
 
 📁 Project Structure
 davinci-minds/
+
 ├── app.py
+
 ├── static/
+
 ├── templates/
+
 ├── utils/
+
 ├── database/
+
 ├── requirements.txt
+
 └── README.md
+
