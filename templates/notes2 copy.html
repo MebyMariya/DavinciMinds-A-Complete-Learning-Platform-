@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <!-- Optimized for mobile, prevent zooming -->
+    <title>Notes</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #69abed, #feb47b);
+            overflow: auto;
+        }
+
+        .container {
+            text-align: left;
+            width: 95%; /* Slightly wider for more content visibility */
+            max-width: 1200px;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            min-height: 70vh;
+            overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
+            margin: 20px auto; /* Center horizontally */
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            border: 5px solid #ffffff;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            margin: 0 auto 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .notes {
+            font-size: 1.3rem; /* Larger font for readability */
+            color: #444;
+            line-height: 1.8; /* Increased line height for better spacing */
+            white-space: pre-wrap; /* Preserves line breaks and spaces from the text */
+        }
+
+        .notes h1 {
+            font-size: 2rem;
+            color: #2c3e50; /* Deep blue for main topics */
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #3498db; /* Blue underline for emphasis */
+            padding-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .notes h2 {
+            font-size: 1.6rem;
+            color: #2980b9; /* Bright blue for subheadings */
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .notes ul {
+            list-style-type: none; /* Remove default bullets to use custom ones */
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .notes li {
+            margin: 10px 0; /* Increased vertical spacing for bullets */
+            color: #7f8c8d; /* Gray for bullet text, easy on the eyes */
+            padding-left: 15px; /* Space for custom bullet */
+            position: relative;
+        }
+
+        .notes li::before {
+            content: "•";
+            color: #e74c3c; /* Red bullet for emphasis (ADHD-friendly visual cue) */
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .back-btn, .mindmap-btn, .download-btn, .download-pdf-btn {
+            width: 180px;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff6f61, #e2574e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 111, 97, 0.3);
+        }
+
+        .back-btn:hover, .mindmap-btn:hover, .download-btn:hover, .download-pdf-btn:hover {
+            background: linear-gradient(135deg, #e2574e, #ff6f61);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 111, 97, 0.5);
+        }
+
+        /* Ensure all content fits in a single view where possible */
+        @media (min-width: 768px) {
+            .container {
+                max-height: 80vh; /* Limit height on larger screens to fit content */
+                overflow-y: auto; /* Allow scrolling if content exceeds height */
+            }
+
+            .notes {
+                max-height: 60vh; /* Limit notes height for single view, with scrolling if needed */
+                overflow-y: auto; /* Enable vertical scrolling for notes if too long */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 85%;
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .notes h1 {
+                font-size: 1.8rem;
+            }
+
+            .notes h2 {
+                font-size: 1.4rem;
+            }
+
+            .notes {
+                font-size: 1.1rem;
+            }
+
+            .back-btn, .mindmap-btn, .download-btn, .download-pdf-btn {
+                width: 150px;
+                font-size: 1.1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.jpg" alt="Creative Mind Logo"> 
+        </div>
+        <div class="title">Notes</div>
+        <div class="notes">
+            {{notes2 | replace('# ', '<h1>') | replace('## ', '<h2>') | replace('- ', '<li>') | replace('\n', '</li>\n') | safe}}
+        </div>
+        <div class="button-group">
+            <button class="back-btn" onclick="history.back()">Back</button>
+            <button class="mindmap-btn" onclick="location.href='{{ url_for('mindmap') }}'">Generate Mindmap</button>
+            <button class="download-btn" onclick="downloadNotes()">Download Notes (.txt)</button>
+            <button class="download-pdf-btn" onclick="downloadPDF()">Download Notes (.pdf)</button>
+        </div>
+    </div>
+
+    <script>
+        function downloadNotes() {
+            const notes = document.querySelector('.notes').innerText;
+            const blob = new Blob([notes], { type: 'text/plain;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'structured_notes.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function downloadPDF() {
+            const notes = document.querySelector('.notes').innerText;
+            fetch('/download_pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ notes: notes })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'structured_notes.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => console.error('Error downloading PDF:', error));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fun Notes 🌈</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #4CAF50, #81C784); /* Green gradient background */
+        }
+        
+        .container {
+            text-align: left;
+            width: 90%;
+            max-width: 1200px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-height: 95vh;
+            min-height: 80vh;
+            overflow-y: auto;
+            margin: 5px auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #ff9800;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            margin: 0 auto 5px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 5px 0;
+            color: #e91e63;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notes {
+            font-size: 1.3rem;
+            color: #333;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 82vh;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 5px;
+        }
+        
+        .notes h1 {
+            font-size: 1.8rem;
+            color: #2196f3;
+            margin: 10px 0;
+            padding: 5px;
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .notes h2 {
+            font-size: 1.5rem;
+            color: #4caf50;
+            margin: 8px 0;
+            padding: 3px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        
+        .notes ul {
+            list-style-type: none;
+            margin-left: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .notes li {
+            margin: 5px 0;
+            color: #555;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1.2rem;
+        }
+        
+        .notes li::before {
+            content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="%23ff5722" viewBox="0 0 16 16"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>');
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        
+        .button-group {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding-bottom: 10px;
+        }
+        
+        .back-btn, .mindmap-btn, .download-btn, .download-pdf-btn, .video-btn {
+            width: 120px;
+            padding: 8px;
+            background: linear-gradient(135deg, #ff9800, #f44336);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+        }
+        
+        .video-btn {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+        }
+        
+        .back-btn:hover, .mindmap-btn:hover, .download-btn:hover, .download-pdf-btn:hover, .video-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.5);
+        }
+        
+        .video-btn:hover {
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 85%;
+                padding: 10px;
+            }
+        
+            .title {
+                font-size: 1.6rem;
+            }
+        
+            .notes {
+                font-size: 1.1rem;
+            }
+        
+            .notes h1 {
+                font-size: 1.5rem;
+            }
+        
+            .notes h2 {
+                font-size: 1.2rem;
+            }
+        
+            .back-btn, .mindmap-btn, .download-btn, .download-pdf-btn, .video-btn {
+                width: 100px;
+                font-size: 0.8rem;
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="../static/images/logo.jpg" alt="Creative Mind Logo">
+        </div>
+        <div class="title">Notes 🌟</div>
+        <div class="notes">
+            {{ notes2 | replace('# ', '<h1>') | replace('## ', '<h2>') | replace('- ', '<li>') | replace('\n', '</li>\n') | safe }}
+        </div>
+        <div class="button-group">
+            <button class="back-btn" onclick="history.back()">Back</button>
+            <button class="mindmap-btn" onclick="location.href='{{ url_for('youtube_mindmap') }}'">Make a Mindmap</button>
+            <button class="video-btn" onclick="location.href='{{ url_for('play_video_2', video_id=video_id) }}'">Back to Video</button>
+            <button class="download-btn" onclick="downloadNotes()">Save as Text</button>
+            <button class="download-pdf-btn" onclick="downloadPDF()">Save as PDF</button>
+        </div>
+    </div>
+
+    <script>
+        function downloadNotes() {
+            const notes = document.querySelector('.notes').innerText;
+            const blob = new Blob([notes], { type: 'text/plain;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fun_notes.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function downloadPDF() {
+    fetch('/download_pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // No body needed; server reads from notes.txt
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Server error: ' + response.status);
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        console.log('Blob size:', blob.size, 'Blob type:', blob.type);
+        if (blob.size === 0) {
+            throw new Error('Downloaded PDF is empty');
+        }
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'fun_notes.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        console.error('Error downloading PDF:', error);
+        alert('Failed to download PDF: ' + error.message);
+    });
+}
+    </script>
+</body>
+</html>
