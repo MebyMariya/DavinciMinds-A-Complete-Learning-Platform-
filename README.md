@@ -31,7 +31,6 @@ DaVinci Minds is an AI-powered interactive learning platform designed specifical
 - **Frontend:** HTML, CSS  
 - **Backend:** Python (Flask)  
 - **Computer Vision:** OpenCV, MediaPipe  
-- **Machine Learning:** VGG16 for skin analysis (customizable for other models)  
 - **Database:** SQLite  
 - **Deployment:** Localhost / Future cloud hosting planned
 
